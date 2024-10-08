@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#5cb85c">
+
+      
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao Gerenciador de Tarefas</h1>
+        <nav>
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Registrar</a></li>
+                <li><a href="tasks.html">Minhas Tarefas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Organize suas tarefas de forma simples!</h2>
+        <p>Com nosso aplicativo, você pode gerenciar suas tarefas de maneira eficiente, mantendo-se produtivo e organizado.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Gerenciador de Tarefas. Todos os direitos reservados.</p>
+    </footer>
+    <script>
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('Service Worker registrado com sucesso:', registration);
+            })
+            .catch(error => {
+              console.log('Falha ao registrar o Service Worker:', error);
+            });
+        }
+      </script>
+      
+</body>
+</html>

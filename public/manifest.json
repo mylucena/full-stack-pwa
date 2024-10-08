@@ -1,0 +1,10 @@
+{
+    "name": "Task Manager App",
+    "short_name": "TaskManager",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#5cb85c",
+    "description": "Um gerenciador de tarefas simples e responsivo"
+  }
+  

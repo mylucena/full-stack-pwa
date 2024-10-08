@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Tarefas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Minhas Tarefas</h1>
+    <form id="taskForm">
+      <input type="text" id="title" placeholder="Título da Tarefa" required>
+      <textarea id="description" placeholder="Descrição" required></textarea>
+      <button type="submit">Adicionar Tarefa</button>
+    </form>
+
+    <div id="tasksList"></div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+    }
+
+    const tasksList = document.getElementById('tasksList');
+    const taskForm = document.getElementById('taskForm');
+
+    // Carregar as tarefas do usuário
+    async function loadTasks() {
+      try {
+        const res = await fetch('/api/tasks', {
+          headers: { 'Authorization': token }
+        });
+
+        const tasks = await res.json();
+        tasksList.innerHTML = tasks.map(task => `
+          <div class="task">
+            <h2>${task.title}</h2>
+            <p>${task.description}</p>
+            <button onclick="deleteTask('${task._id}')">Excluir</button>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadTasks();
+
+    // Adicionar nova tarefa
+    taskForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+
+      try {
+        await fetch('/api/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          },
+          body: JSON.stringify({ title, description })
+        });
+
+        loadTasks(); // Recarregar tarefas
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    // Deletar tarefa
+    async function deleteTask(id) {
+      try {
+        await fetch(`/api/tasks/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': token }
+        });
+
+        loadTasks(); // Recarregar tarefas
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
